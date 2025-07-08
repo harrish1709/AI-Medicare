@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Governance System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Welcome, {{ user }} ({{ role }})</h2>
+        <a href="{{ url_for('manage_users') }}" class="btn btn-outline-primary btn-sm mb-3">Manage Users (Admin only)</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+    </div>
+
+    <!-- Prompt Input -->
+    <form method="POST">
+        <div class="mb-3">
+            <label for="prompt" class="form-label">Enter Prompt</label>
+            <textarea class="form-control" id="prompt" name="prompt" rows="3" placeholder="Ask a medical question or request data..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Prompt</button>
+    </form>
+
+    <!-- Policy or Moderation Advice -->
+    {% if advice %}
+        <div class="alert alert-warning mt-4" role="alert">
+            {{ advice }}
+        </div>
+    {% endif %}
+
+    <!-- LLM / Dataset Output -->
+    {% if output %}
+        <div class="card mt-4">
+            <div class="card-header fw-bold">Output</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    {{ output | safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Form -->
+        <form method="POST" action="{{ url_for('feedback') }}" class="mt-4">
+            <h5>Was this output helpful?</h5>
+            <input type="hidden" name="prompt" value="{{ request.form.prompt }}">
+            <input type="hidden" name="output" value="{{ output }}">
+            
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="helpful" id="helpfulYes" value="Yes" required>
+                <label class="form-check-label" for="helpfulYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="helpful" id="helpfulNo" value="No">
+                <label class="form-check-label" for="helpfulNo">No</label>
+            </div>
+
+            <div class="mb-3 mt-2">
+                <label for="comment" class="form-label">Any comments?</label>
+                <textarea class="form-control" id="comment" name="comment" rows="2" placeholder="Optional..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Submit Feedback</button>
+        </form>
+    {% endif %}
+</div>
+
+</body>
+</html>
