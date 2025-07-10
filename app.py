@@ -16,7 +16,7 @@ openai.api_base = "https://api.together.xyz/v1"
 
 # --- Constants ---
 DB = "governance.db"
-DATASET_PATH = "D:/Multi Agent AI Governance System - Sample/healthcare_data.csv"  # Replace with actual path
+DATASET_PATH = "healthcare_data.csv"  # Replace with actual path
 
 # --- Initialize DB ---
 def init_db():
