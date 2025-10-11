@@ -10,9 +10,9 @@ import openai
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# --- LLM API Setup (Together AI with LLaMA 3) ---
-openai.api_key = "8ccd1d23cb910fd0c01face85ad19fff044c29fcb3ee121704d4c4a368bdfda6"  # Replace with your actual API key
-openai.api_base = "https://api.together.xyz/v1"
+# --- LLM API Setup (Groq AI with LLaMA 3) ---
+openai.api_key = os.getenv("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")
+openai.api_base = "https://api.groq.com/openai/v1"
 
 # --- Constants ---
 DB = "governance.db"
