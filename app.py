@@ -129,7 +129,7 @@ def handle_dataset_request(prompt):
 def call_llm(prompt):
     try:
         response = openai.ChatCompletion.create(
-            model="meta-llama/Llama-3-8b-chat-hf",
+            model="llama3-70b-8192",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=1024,  # increased from 512
             temperature=0.7
