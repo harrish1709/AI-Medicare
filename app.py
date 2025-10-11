@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # --- LLM API Setup (Groq AI with LLaMA 3) ---
-openai.api_key = os.getenv("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")
+openai.api_key = "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"
 openai.api_base = "https://api.groq.com/openai/v1"
 
 # --- Constants ---
