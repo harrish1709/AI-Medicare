@@ -137,7 +137,7 @@ def call_llm(prompt):
             max_tokens=1024,  # increased from 512
             temperature=0.7
         )
-        return sanitize_output(response['choices'][0]['message']['content'])
+        return sanitize_output(response.choices[0].message.content)
     except Exception as e:
         return f"Error calling model: {str(e)}"
 
