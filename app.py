@@ -5,14 +5,18 @@ from datetime import datetime
 import sqlite3
 import os
 import pandas as pd
-import openai
+from openai import OpenAI
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # --- LLM API Setup (Groq AI with LLaMA 3) ---
-openai.api_key = "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"
-openai.api_base = "https://api.groq.com/openai/v1"
+# openai.api_key = "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"
+# openai.api_base = "https://api.groq.com/openai/v1"
+client = OpenAI(
+    api_key="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",
+    base_url="https://api.groq.com/openai/v1"
+)
 
 # --- Constants ---
 DB = "governance.db"
@@ -128,7 +132,7 @@ def handle_dataset_request(prompt):
 # --- LLM Call ---
 def call_llm(prompt):
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=1024,  # increased from 512
