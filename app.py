@@ -14,7 +14,7 @@ app.secret_key = os.urandom(24)
 # openai.api_key = "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"
 # openai.api_base = "https://api.groq.com/openai/v1"
 client = Groq(
-    api_key="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"
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 # --- Constants ---
