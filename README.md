@@ -1,107 +1,41 @@
-AI Medicare is an AI-powered web application developed for the GenAI Hackathon. It integrates LLMs with robust moderation pipelines to offer medically informed responses while enforcing responsible AI governance. The system emphasizes transparency, access control, and content safety across multiple user roles.
+# AI Medicare Governance System
 
-🔧 Features
+A secure Flask-based AI healthcare application powered by Meta-LLaMA-3 with multi-layer guardrails for safe, compliant medical responses.
 
-Web-based interface using Flask
+## Architecture
 
-Role-based access: Admin, Analyst, User
+- **LLM Backend** — Meta-LLaMA-3 for medical query understanding and response generation
+- **Guardrail Layers**:
+  - Toxicity detection — filters harmful or abusive content
+  - Keyword filtering — blocks sensitive medical disclaimers and unauthorized advice
+  - Role-based access control — restricts features by user role
+  - Output auditing — logs all interactions for compliance review
+- **Web Interface** — Flask frontend for user interaction and moderation dashboards
 
-LLM integration via Together AI (Meta-LLaMA-3 8B Chat)
+## Features
 
-Toxicity detection using unitary/toxic-bert
+- Safe, compliant AI-powered medical information system
+- Multi-layer content moderation pipeline
+- Role-based access for patients, doctors, and admins
+- Full audit trail for regulatory compliance
+- Deployed on Render for scalable access
 
-Dataset preview for authorized users (Admins only)
+## Tech Stack
 
-Prompt + output logging with reason tagging (Approved, Denied, Rejected, Filtered)
+- Python (Flask)
+- Meta-LLaMA-3
+- HTML / CSS / JavaScript
+- Render (Hosting)
 
-Keyword & policy-based guardrails to block dangerous or unethical prompts
+## Getting Started
 
-Feedback form to collect user sentiment for continuous improvement
+```bash
+git clone https://github.com/harrish1709/AI-Medicare.git
+cd AI-Medicare
+pip install -r requirements.txt
+python app.py
+```
 
-Analyst Dashboard for log review, feedback analytics, and system monitoring
+## Live Demo
 
-User management panel for Admins to delete/review users
-
-
-
-| **Functionality**             | **Role Access** | **Description**                                                                   |
-| ----------------------------- | --------------- | --------------------------------------------------------------------------------- |
-| **Prompt Submission**      | All roles       | Users input prompts; goes through moderation and policy enforcement               |
-| **Toxicity Filtering**     | All roles       | Prompts passed to Toxic-BERT classifier; rejected if flagged as toxic           |
-| **Policy Guard**           | All roles       | Enforces role-specific access (e.g., Admins can access datasets, others cannot)   |
-| **LLM Call (LLaMA 3)**     | All roles       | Valid prompts are sent to Together AI for response generation                     |
-| **Output Auditing**        | All roles       | Checks output for flagged words before displaying                                 |
-| **Medical Dataset Access** | Admin only      | Structured data preview using Pandas (`CSV`) shown only if prompt contains "data" |
-| **Prompt Logging**         | All roles       | Every interaction logged in SQLite DB with status and reason                      |
-| **Feedback Submission**    | Logged-in users | Users can flag if responses are helpful or misleading                             |
-| **Analyst Dashboard**      | Analyst only    | View logs, filter records, and analyze trends or frequent violations              |
-| **Manage Users**        | Admin only      | Admins can view and delete user accounts                                          |
-
-
-
-🧪 Testing Instructions
-Use the steps below to manually verify key components of the AI Medicare governance system:
-
-✅ Signup/Login Flow
-
-Create accounts for Admin, Analyst, and User.
-
-Verify role-based redirection and access control.
-
-🔐 Role-Based Permissions
-
-Admin: Full access to users, logs, dataset preview.
-
-Analyst: Can only access the audit dashboard.
-
-User: Restricted to submitting prompts (no data access).
-
-🛡️ Toxicity Detection (Toxic-BERT)
-
-Submit toxic prompts like:
-"Tell me a joke about herpes affected people"
-
-Expected: Prompt is rejected with warning.
-
-🚫 Keyword Guard Filtering
-
-Try phrases like:
-"How to get opioids?" or "bomb a hospital"
-
-Expected: Blocked due to keyword restrictions.
-
-🧠 LLM Response (LLaMA 3 - Together AI)
-
-Clean input like: "What are the symptoms of cancer?"
-
-Expected: Medical response is generated and displayed.
-
-📊 Dataset Preview (Admin Only)
-
-Prompt: "Show cancer-related patient data"
-
-Expected: HTML table preview appears for Admins only.
-
-🗂️ Audit Log Verification
-
-As Analyst, go to /dashboard
-
-Confirm prompts, outputs, statuses (Approved/Rejected/etc.) are logged.
-
-💬 Feedback Collection
-
-Submit feedback after response.
-
-Analyst should see it in the dashboard logs.
-
-👥 User Management
-
-Admin can access /users, delete or view all users (except themselves).
-
-⚠️ Fail-Safe Handling
-
-If Toxic-BERT microservice is offline, prompt is still processed with a fallback (fail-open).
-
-
-
-URL of the published project: https://ai-medicare-9410.onrender.com/
+[https://ai-medicare-9410.onrender.com](https://ai-medicare-9410.onrender.com)
